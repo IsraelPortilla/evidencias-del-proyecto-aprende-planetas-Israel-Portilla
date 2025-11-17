@@ -1777,12 +1777,13 @@
             }
         }
 
+         
         function selectPlanet(planetName) {
             // Remover clase active de todos los planetas
             document.querySelectorAll('.planet-item').forEach(planet => {
                 planet.classList.remove('active');
             });
-            
+           
             // Agregar clase active al planeta clickeado
             const planetElement = document.querySelector(`.planet-item:nth-child(${getPlanetIndex(planetName) + 1})`);
             if (planetElement) {
@@ -1792,6 +1793,7 @@
             // Actualizar panel de información
             updatePlanetInfo(planetName);
             audioSystem.playSound('click');
+        
         }
 
         function getPlanetIndex(planetName) {
@@ -1843,6 +1845,7 @@
             }
         }
 
+       
         function playNarration(planetName) {
             audioSystem.playSound('click');
             alert(`Reproduciendo narración sobre ${planetName}`);
