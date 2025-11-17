@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Sistema Solar - Retículas Mejoradas</title>
+    <title>App Sistema Solar </title>
     <style>
-        /* ESTILOS GENERALES MEJORADOS */
+      
         * {
             margin: 0;
             padding: 0;
@@ -39,7 +39,7 @@
             min-height: 100vh;
         }
 
-        /* Sistema de retícula base mejorado */
+       
         .grid {
             display: grid;
             gap: 15px;
@@ -53,7 +53,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Retículas específicas mejoradas */
+      
         .home-grid {
             grid-template-areas: 
                 "header header"
@@ -111,7 +111,7 @@
             min-height: 90vh;
         }
 
-        /* Estilos mejorados para elementos de la retícula */
+      
         .grid-item {
             background: var(--card-bg);
             border-radius: 20px;
@@ -127,7 +127,7 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
-        /* Áreas específicas mejoradas */
+       
         .header {
             grid-area: header;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -200,7 +200,7 @@
         .stats { grid-area: stats; background: linear-gradient(135deg, #6a11cb, #2575fc); }
         .badges { grid-area: badges; background: linear-gradient(135deg, #ff9a9e, #fecfef); }
 
-        /* Estilos mejorados para elementos interactivos */
+       
         .menu-item {
             display: flex;
             flex-direction: column;
@@ -295,7 +295,7 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
         }
 
-        /* Mejoras visuales para áreas específicas */
+       
         .solar-system-view {
             height: 250px;
             background: rgba(0,0,0,0.3);
@@ -353,7 +353,7 @@
             opacity: 0.6;
         }
 
-        /* Scrollbar personalizado */
+        
         .planets-list::-webkit-scrollbar {
             width: 8px;
         }
@@ -372,7 +372,7 @@
             background: rgba(255,255,255,0.5);
         }
 
-        /* Responsive mejorado */
+      
         @media (max-width: 768px) {
             .home-grid {
                 grid-template-areas: 
@@ -444,7 +444,7 @@
             }
         }
 
-        /* Estados de carga y transiciones */
+      
         .loading {
             position: relative;
             overflow: hidden;
@@ -466,7 +466,7 @@
             100% { left: 100%; }
         }
 
-        /* Mejoras de accesibilidad */
+        
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -475,7 +475,7 @@
             }
         }
 
-        /* Focus visible para accesibilidad */
+       
         .btn:focus, .menu-item:focus, .planet-item:focus {
             outline: 3px solid var(--accent);
             outline-offset: 2px;
@@ -484,7 +484,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- PANTALLA DE INICIO MEJORADA -->
+       
         <section id="home-screen" class="grid home-grid">
             <div class="grid-item header">
                 <h1>🚀 Aventura Espacial ⭐</h1>
@@ -566,7 +566,7 @@
             </div>
         </section>
 
-        <!-- PANTALLA DE EXPLORACIÓN MEJORADA -->
+       
         <section id="planets-screen" class="grid planets-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🌌 Explora los Planetas</h1>
@@ -644,7 +644,7 @@
             </div>
         </section>
 
-        <!-- PANTALLA DE JUEGOS MEJORADA -->
+       
         <section id="games-screen" class="grid games-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🎮 Juegos Espaciales</h1>
@@ -705,7 +705,7 @@
             </div>
         </section>
 
-        <!-- PANTALLA DE QUIZ MEJORADA -->
+        
         <section id="quiz-screen" class="grid quiz-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🧠 Quiz Espacial</h1>
@@ -769,7 +769,7 @@
             </div>
         </section>
 
-        <!-- NUEVA PANTALLA DE LOGROS -->
+     
         <section id="achievements-screen" class="grid achievements-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🏆 Mis Logros</h1>
