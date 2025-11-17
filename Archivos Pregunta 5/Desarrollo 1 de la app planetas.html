@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Sistema Solar - Retículas Mejoradas</title>
+    <title>App Sistema Solar</title>
     <style>
-        /* ESTILOS GENERALES MEJORADOS */
+        
         * {
             margin: 0;
             padding: 0;
@@ -39,7 +39,7 @@
             min-height: 100vh;
         }
 
-        /* Sistema de retícula base mejorado */
+        
         .grid {
             display: grid;
             gap: 15px;
@@ -53,16 +53,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Retículas específicas mejoradas */
+        
         .home-grid {
             grid-template-areas: 
                 "header header"
                 "welcome welcome"
                 "explore games"
-                "quiz achievements"
-                "help settings";
+                "quiz achievements";
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto 1fr 1fr auto;
+            grid-template-rows: auto auto 1fr 1fr;
             min-height: 90vh;
         }
 
@@ -111,7 +110,7 @@
             min-height: 90vh;
         }
 
-        /* Estilos mejorados para elementos de la retícula */
+        
         .grid-item {
             background: var(--card-bg);
             border-radius: 20px;
@@ -127,7 +126,7 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
-        /* Áreas específicas mejoradas */
+        
         .header {
             grid-area: header;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -157,8 +156,6 @@
         .games { grid-area: games; background: linear-gradient(135deg, var(--success), #6bffa3); }
         .quiz { grid-area: quiz; background: linear-gradient(135deg, #ffd86b, #ffed6b); }
         .achievements { grid-area: achievements; background: linear-gradient(135deg, #c56bff, #e86bff); }
-        .help { grid-area: help; background: linear-gradient(135deg, #6bdfff, #6b8fff); }
-        .settings { grid-area: settings; background: linear-gradient(135deg, #ff6b8b, #ff8f6b); }
 
         .solar-system { 
             grid-area: solar-system; 
@@ -200,7 +197,7 @@
         .stats { grid-area: stats; background: linear-gradient(135deg, #6a11cb, #2575fc); }
         .badges { grid-area: badges; background: linear-gradient(135deg, #ff9a9e, #fecfef); }
 
-        /* Estilos mejorados para elementos interactivos */
+        
         .menu-item {
             display: flex;
             flex-direction: column;
@@ -295,7 +292,7 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
         }
 
-        /* Mejoras visuales para áreas específicas */
+        
         .solar-system-view {
             height: 250px;
             background: rgba(0,0,0,0.3);
@@ -353,7 +350,7 @@
             opacity: 0.6;
         }
 
-        /* Scrollbar personalizado */
+        
         .planets-list::-webkit-scrollbar {
             width: 8px;
         }
@@ -372,7 +369,7 @@
             background: rgba(255,255,255,0.5);
         }
 
-        /* Responsive mejorado */
+        
         @media (max-width: 768px) {
             .home-grid {
                 grid-template-areas: 
@@ -381,9 +378,7 @@
                     "explore"
                     "games"
                     "quiz"
-                    "achievements"
-                    "help"
-                    "settings";
+                    "achievements";
                 grid-template-columns: 1fr;
                 grid-template-rows: auto;
             }
@@ -444,7 +439,7 @@
             }
         }
 
-        /* Estados de carga y transiciones */
+        
         .loading {
             position: relative;
             overflow: hidden;
@@ -466,7 +461,7 @@
             100% { left: 100%; }
         }
 
-        /* Mejoras de accesibilidad */
+        
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -480,11 +475,39 @@
             outline: 3px solid var(--accent);
             outline-offset: 2px;
         }
+
+        
+        .planet-image {
+            height: 120px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- PANTALLA DE INICIO MEJORADA -->
+        <!-- PANTALLA DE INICIO  -->
         <section id="home-screen" class="grid home-grid">
             <div class="grid-item header">
                 <h1>🚀 Aventura Espacial ⭐</h1>
@@ -511,7 +534,7 @@
                     <h3>Explora Planetas</h3>
                     <p>Conoce todos los planetas con animaciones y audio</p>
                     <div class="progress-indicator" style="margin-top: 10px;">
-                        <small>0/8 planetas explorados</small>
+                        <small id="planets-explored">0/8 planetas explorados</small>
                     </div>
                 </div>
             </div>
@@ -533,7 +556,7 @@
                     <h3>Quiz Espacial</h3>
                     <p>Pon a prueba tus conocimientos</p>
                     <div class="progress-indicator" style="margin-top: 10px;">
-                        <small>Mejor puntuación: 8/10</small>
+                        <small id="quiz-score">Mejor puntuación: 0/10</small>
                     </div>
                 </div>
             </div>
@@ -544,29 +567,13 @@
                     <h3>Mis Logros</h3>
                     <p>Revisa tus medallas y estrellas ganadas</p>
                     <div class="progress-indicator" style="margin-top: 10px;">
-                        <small>5/15 logros desbloqueados</small>
+                        <small id="achievements-unlocked">0/15 logros desbloqueados</small>
                     </div>
-                </div>
-            </div>
-            
-            <div class="grid-item help">
-                <div class="menu-item">
-                    <div class="icon">❔</div>
-                    <h3>Ayuda</h3>
-                    <p>Aprende a usar la aplicación</p>
-                </div>
-            </div>
-
-            <div class="grid-item settings">
-                <div class="menu-item">
-                    <div class="icon">⚙️</div>
-                    <h3>Ajustes</h3>
-                    <p>Personaliza tu experiencia</p>
                 </div>
             </div>
         </section>
 
-        <!-- PANTALLA DE EXPLORACIÓN MEJORADA -->
+         
         <section id="planets-screen" class="grid planets-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🌌 Explora los Planetas</h1>
@@ -575,46 +582,48 @@
             
             <div class="grid-item solar-system">
                 <h3>🌞 Sistema Solar Interactivo</h3>
-                <div class="solar-system-view">
-                    [Sistema Solar Animado - Los planetas orbitan alrededor del Sol]
+                <div class="solar-system-view" id="solar-system-view">
+                    <div class="sun" style="width: 50px; height: 50px; background: #ffd700; border-radius: 50%; position: absolute;"></div>
+                    <div class="planet-orbit" style="position: absolute; width: 80px; height: 80px; border: 1px dashed rgba(255,255,255,0.3); border-radius: 50%;"></div>
+                    <div class="planet" style="width: 15px; height: 15px; background: #8c8c8c; border-radius: 50%; position: absolute; top: 10px; left: 40px;"></div>
                 </div>
                 <div class="system-controls" style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button class="btn">⏯️ Pausar/Reanudar</button>
-                    <button class="btn">🔍 Acercar/Alejar</button>
+                    <button class="btn" id="toggle-animation">⏸️ Pausar</button>
+                    <button class="btn" id="zoom-control">🔍 Acercar</button>
                 </div>
             </div>
             
             <div class="grid-item planets-list">
                 <h3>📋 Lista de Planetas</h3>
-                <div class="planet-item active">
+                <div class="planet-item active" onclick="selectPlanet('mercury')">
                     <div class="planet-icon" style="background: #8c8c8c;"></div>
                     <div>
                         <h4>Mercurio</h4>
                         <p>Planeta más cercano al Sol • Sin lunas</p>
                     </div>
                 </div>
-                <div class="planet-item">
+                <div class="planet-item" onclick="selectPlanet('venus')">
                     <div class="planet-icon" style="background: #e6c229;"></div>
                     <div>
                         <h4>Venus</h4>
                         <p>Planeta más caliente • Sin lunas</p>
                     </div>
                 </div>
-                <div class="planet-item">
+                <div class="planet-item" onclick="selectPlanet('earth')">
                     <div class="planet-icon" style="background: #2f54d6;"></div>
                     <div>
                         <h4>Tierra</h4>
                         <p>Nuestro hogar • 1 luna</p>
                     </div>
                 </div>
-                <div class="planet-item">
+                <div class="planet-item" onclick="selectPlanet('mars')">
                     <div class="planet-icon" style="background: #c1440e;"></div>
                     <div>
                         <h4>Marte</h4>
                         <p>Planeta rojo • 2 lunas</p>
                     </div>
                 </div>
-                <div class="planet-item">
+                <div class="planet-item" onclick="selectPlanet('jupiter')">
                     <div class="planet-icon" style="background: #e0b36a;"></div>
                     <div>
                         <h4>Júpiter</h4>
@@ -624,27 +633,27 @@
             </div>
             
             <div class="grid-item info-panel">
-                <h3>🪐 Mercurio</h3>
-                <div class="planet-image" style="height: 120px; background: #8c8c8c; border-radius: 10px; margin: 10px 0; display: flex; align-items: center; justify-content: center;">
+                <h3 id="planet-name">🪐 Mercurio</h3>
+                <div id="planet-image" class="planet-image" style="background: #8c8c8c;">
                     [Imagen de Mercurio]
                 </div>
-                <p><strong>Diámetro:</strong> 4,879 km</p>
-                <p><strong>Temperatura:</strong> -173°C to 427°C</p>
-                <p><strong>Dato curioso:</strong> ¡Un año en Mercurio solo dura 88 días terrestres!</p>
-                <button class="btn btn-primary" style="margin-top: 15px; width: 100%;">🎧 Escuchar Narración</button>
-                <button class="btn" style="margin-top: 5px; width: 100%;">⭐ Marcar como Explorado</button>
+                <p id="planet-diameter"><strong>Diámetro:</strong> 4,879 km</p>
+                <p id="planet-temperature"><strong>Temperatura:</strong> -173°C to 427°C</p>
+                <p id="planet-fact"><strong>Dato curioso:</strong> ¡Un año en Mercurio solo dura 88 días terrestres!</p>
+                <button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="playNarration()">🎧 Escuchar Narración</button>
+                <button class="btn" style="margin-top: 5px; width: 100%;" onclick="markAsExplored()">⭐ Marcar como Explorado</button>
             </div>
             
             <div class="grid-item navigation">
                 <button class="btn btn-secondary" onclick="showScreen('home-screen')">🏠 Volver al Inicio</button>
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn">⬅️ Planeta Anterior</button>
-                    <button class="btn">Siguiente Planeta ➡️</button>
+                    <button class="btn" onclick="previousPlanet()">⬅️ Planeta Anterior</button>
+                    <button class="btn" onclick="nextPlanet()">Siguiente Planeta ➡️</button>
                 </div>
             </div>
         </section>
 
-        <!-- PANTALLA DE JUEGOS MEJORADA -->
+        
         <section id="games-screen" class="grid games-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🎮 Juegos Espaciales</h1>
@@ -653,13 +662,16 @@
             
             <div class="grid-item game-area">
                 <h3>🪐 Ordena los Planetas</h3>
-                <div class="game-container">
-                    [Área de Juego - Arrastra los planetas a sus órbitas correctas]
+                <div class="game-container" id="game-container">
+                    <div class="orbit" style="position: absolute; width: 60px; height: 60px; border: 1px dashed rgba(255,255,255,0.5); border-radius: 50%;"></div>
+                    <div class="orbit" style="position: absolute; width: 100px; height: 100px; border: 1px dashed rgba(255,255,255,0.5); border-radius: 50%;"></div>
+                    <div class="orbit" style="position: absolute; width: 140px; height: 140px; border: 1px dashed rgba(255,255,255,0.5); border-radius: 50%;"></div>
+                    <div class="sun" style="width: 40px; height: 40px; background: #ffd700; border-radius: 50%;"></div>
                 </div>
                 <div class="game-stats" style="display: flex; justify-content: space-between; margin-top: 15px;">
-                    <div>Tiempo: <strong>01:25</strong></div>
-                    <div>Intentos: <strong>3</strong></div>
-                    <div>Precisión: <strong>75%</strong></div>
+                    <div>Tiempo: <strong id="game-time">01:25</strong></div>
+                    <div>Intentos: <strong id="game-attempts">3</strong></div>
+                    <div>Precisión: <strong id="game-accuracy">75%</strong></div>
                 </div>
             </div>
             
@@ -669,43 +681,43 @@
                 <div class="difficulty-selector" style="margin-top: 15px;">
                     <h4>Dificultad:</h4>
                     <div style="display: flex; gap: 5px;">
-                        <button class="btn" style="flex: 1;">Fácil</button>
-                        <button class="btn btn-primary" style="flex: 1;">Normal</button>
-                        <button class="btn" style="flex: 1;">Difícil</button>
+                        <button class="btn" style="flex: 1;" onclick="setDifficulty('easy')">Fácil</button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="setDifficulty('normal')">Normal</button>
+                        <button class="btn" style="flex: 1;" onclick="setDifficulty('hard')">Difícil</button>
                     </div>
                 </div>
-                <button class="btn btn-success" style="margin-top: 15px; width: 100%;">✅ Comprobar Respuestas</button>
+                <button class="btn btn-success" style="margin-top: 15px; width: 100%;" onclick="checkAnswers()">✅ Comprobar Respuestas</button>
             </div>
             
             <div class="grid-item game-controls">
                 <h3>🎯 Planetas para Ordenar</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px;">
-                    <div class="planet-icon" style="background: #8c8c8c; cursor: grab;" draggable="true"></div>
-                    <div class="planet-icon" style="background: #e6c229; cursor: grab;" draggable="true"></div>
-                    <div class="planet-icon" style="background: #2f54d6; cursor: grab;" draggable="true"></div>
-                    <div class="planet-icon" style="background: #c1440e; cursor: grab;" draggable="true"></div>
-                    <div class="planet-icon" style="background: #e0b36a; cursor: grab;" draggable="true"></div>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px;" id="game-planets">
+                    <div class="planet-icon" style="background: #8c8c8c; cursor: grab;" draggable="true" data-planet="mercury"></div>
+                    <div class="planet-icon" style="background: #e6c229; cursor: grab;" draggable="true" data-planet="venus"></div>
+                    <div class="planet-icon" style="background: #2f54d6; cursor: grab;" draggable="true" data-planet="earth"></div>
+                    <div class="planet-icon" style="background: #c1440e; cursor: grab;" draggable="true" data-planet="mars"></div>
+                    <div class="planet-icon" style="background: #e0b36a; cursor: grab;" draggable="true" data-planet="jupiter"></div>
                 </div>
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button class="btn" style="flex: 1;">🔄 Reiniciar</button>
-                    <button class="btn" style="flex: 1;">🔊 Ayuda Audio</button>
+                    <button class="btn" style="flex: 1;" onclick="resetGame()">🔄 Reiniciar</button>
+                    <button class="btn" style="flex: 1;" onclick="playAudioHelp()">🔊 Ayuda Audio</button>
                 </div>
             </div>
             
             <div class="grid-item progress">
                 <h3>📊 Progreso del Juego</h3>
-                <p>⭐ 3/8 planetas colocados correctamente</p>
-                <div style="width: 100%; height: 20px; background: rgba(0,0,0,0.3); border-radius: 10px; margin-top: 10px; overflow: hidden;">
-                    <div style="width: 37.5%; height: 100%; background: linear-gradient(90deg, #4facfe, #00f2fe); border-radius: 10px;"></div>
+                <p id="game-progress-text">⭐ 3/8 planetas colocados correctamente</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="game-progress-bar" style="width: 37.5%;"></div>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-top: 15px;">
                     <button class="btn" onclick="showScreen('home-screen')">🏠 Inicio</button>
-                    <button class="btn">🎮 Otros Juegos</button>
+                    <button class="btn" onclick="showOtherGames()">🎮 Otros Juegos</button>
                 </div>
             </div>
         </section>
 
-        <!-- PANTALLA DE QUIZ MEJORADA -->
+        
         <section id="quiz-screen" class="grid quiz-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🧠 Quiz Espacial</h1>
@@ -714,38 +726,38 @@
             
             <div class="grid-item progress">
                 <h3>📈 Progreso</h3>
-                <p>Pregunta <strong>3</strong> de <strong>10</strong></p>
-                <div style="width: 100%; height: 10px; background: rgba(0,0,0,0.3); border-radius: 5px; margin-top: 5px;">
-                    <div style="width: 30%; height: 100%; background: linear-gradient(90deg, #d4fc79, #96e6a1); border-radius: 5px;"></div>
+                <p id="quiz-progress">Pregunta <strong>3</strong> de <strong>10</strong></p>
+                <div class="progress-bar" style="height: 10px;">
+                    <div class="progress-fill" id="quiz-progress-bar" style="width: 30%; background: linear-gradient(90deg, #d4fc79, #96e6a1);"></div>
                 </div>
                 <div style="margin-top: 15px;">
-                    <p>Puntuación: <strong>2/3</strong></p>
-                    <p>Tiempo: <strong>01:45</strong></p>
+                    <p>Puntuación: <strong id="quiz-score-current">2/3</strong></p>
+                    <p>Tiempo: <strong id="quiz-time">01:45</strong></p>
                 </div>
-                <button class="btn" style="margin-top: 10px; width: 100%;">⏸️ Pausar Quiz</button>
+                <button class="btn" style="margin-top: 10px; width: 100%;" onclick="pauseQuiz()">⏸️ Pausar Quiz</button>
             </div>
             
             <div class="grid-item question">
-                <h3>❓ Pregunta 3</h3>
-                <p>¿Cuál es el planeta más grande del Sistema Solar?</p>
+                <h3 id="quiz-question-number">❓ Pregunta 3</h3>
+                <p id="quiz-question-text">¿Cuál es el planeta más grande del Sistema Solar?</p>
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button class="btn">🔊 Escuchar Pregunta</button>
-                    <button class="btn">💡 Pista Visual</button>
+                    <button class="btn" onclick="playQuestionAudio()">🔊 Escuchar Pregunta</button>
+                    <button class="btn" onclick="showVisualHint()">💡 Pista Visual</button>
                 </div>
             </div>
             
             <div class="grid-item options">
                 <h3>🔘 Opciones de Respuesta</h3>
-                <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px;">
-                    <button class="btn" style="text-align: left; justify-content: flex-start;">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px;" id="quiz-options">
+                    <button class="btn" style="text-align: left; justify-content: flex-start;" onclick="selectAnswer('A')">
                         <span style="background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 50%; margin-right: 10px;">A</span>
                         Tierra
                     </button>
-                    <button class="btn" style="text-align: left; justify-content: flex-start;">
+                    <button class="btn" style="text-align: left; justify-content: flex-start;" onclick="selectAnswer('B')">
                         <span style="background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 50%; margin-right: 10px;">B</span>
                         Júpiter
                     </button>
-                    <button class="btn" style="text-align: left; justify-content: flex-start;">
+                    <button class="btn" style="text-align: left; justify-content: flex-start;" onclick="selectAnswer('C')">
                         <span style="background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 50%; margin-right: 10px;">C</span>
                         Saturno
                     </button>
@@ -754,22 +766,22 @@
             
             <div class="grid-item feedback">
                 <h3>💬 Retroalimentación</h3>
-                <p>Selecciona una respuesta para continuar. ¡Tú puedes!</p>
+                <p id="quiz-feedback">Selecciona una respuesta para continuar. ¡Tú puedes!</p>
                 <div class="encouragement" style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.2); border-radius: 10px;">
-                    <small>⭐ Recuerda: Júpiter es conocido como el "gigante gaseoso"</small>
+                    <small id="quiz-hint">⭐ Recuerda: Júpiter es conocido como el "gigante gaseoso"</small>
                 </div>
             </div>
             
             <div class="grid-item navigation">
                 <button class="btn btn-secondary" onclick="showScreen('home-screen')">🏠 Salir al Inicio</button>
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn">⏮️ Anterior</button>
-                    <button class="btn btn-primary">Siguiente ⏭️</button>
+                    <button class="btn" onclick="previousQuestion()">⏮️ Anterior</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()">Siguiente ⏭️</button>
                 </div>
             </div>
         </section>
 
-        <!-- NUEVA PANTALLA DE LOGROS -->
+        
         <section id="achievements-screen" class="grid achievements-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🏆 Mis Logros</h1>
@@ -779,37 +791,37 @@
             <div class="grid-item stats">
                 <h3>📊 Estadísticas</h3>
                 <div style="margin-top: 15px;">
-                    <p>⭐ <strong>125</strong> Estrellas</p>
-                    <p>🪐 <strong>5/8</strong> Planetas Explorados</p>
-                    <p>🎮 <strong>3/5</strong> Juegos Completados</p>
-                    <p>🧠 <strong>75%</strong> Promedio Quiz</p>
-                    <p>⏱️ <strong>2h 30m</strong> Tiempo Total</p>
+                    <p>⭐ <strong id="stats-stars">125</strong> Estrellas</p>
+                    <p>🪐 <strong id="stats-planets">5/8</strong> Planetas Explorados</p>
+                    <p>🎮 <strong id="stats-games">3/5</strong> Juegos Completados</p>
+                    <p>🧠 <strong id="stats-quiz">75%</strong> Promedio Quiz</p>
+                    <p>⏱️ <strong id="stats-time">2h 30m</strong> Tiempo Total</p>
                 </div>
                 <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
                     <h4>🎯 Próximo Objetivo</h4>
-                    <p>Explora 3 planetas más para desbloquear la medalla "Explorador Estelar"</p>
+                    <p id="next-objective">Explora 3 planetas más para desbloquear la medalla "Explorador Estelar"</p>
                 </div>
             </div>
             
             <div class="grid-item achievements">
                 <h3>🎖️ Logros Desbloqueados</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
-                    <div class="achievement-badge">
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;" id="achievements-list">
+                    <div class="achievement-badge" data-achievement="first-contact">
                         <div style="font-size: 2em;">🪐</div>
                         <strong>Primer Contacto</strong>
                         <small>Explora tu primer planeta</small>
                     </div>
-                    <div class="achievement-badge">
+                    <div class="achievement-badge" data-achievement="rising-star">
                         <div style="font-size: 2em;">⭐</div>
                         <strong>Estrella Naciente</strong>
                         <small>Completa 5 quizzes</small>
                     </div>
-                    <div class="achievement-badge">
+                    <div class="achievement-badge" data-achievement="space-player">
                         <div style="font-size: 2em;">🎮</div>
                         <strong>Jugador Espacial</strong>
                         <small>Gana 3 juegos</small>
                     </div>
-                    <div class="achievement-badge locked">
+                    <div class="achievement-badge locked" data-achievement="stellar-explorer">
                         <div style="font-size: 2em;">🚀</div>
                         <strong>Explorador Estelar</strong>
                         <small>Explora 8 planetas</small>
@@ -824,3 +836,389 @@
                         <div style="font-size: 2em;">🥉</div>
                         <strong>Bronce</strong>
                         <div>Nivel 1</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2em;">🥈</div>
+                        <strong>Plata</strong>
+                        <div>Nivel 2</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2em;">🥇</div>
+                        <strong>Oro</strong>
+                        <div>Nivel 3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid-item navigation">
+                <button class="btn btn-secondary" onclick="showScreen('home-screen')">🏠 Volver al Inicio</button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn" onclick="shareAchievements()">📤 Compartir Logros</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        
+        function showScreen(screenId) {
+            // Ocultar todas las pantallas
+            const screens = document.querySelectorAll('section');
+            screens.forEach(screen => {
+                screen.style.display = 'none';
+            });
+            
+            
+            const selectedScreen = document.getElementById(screenId);
+            if (selectedScreen) {
+                selectedScreen.style.display = 'grid';
+                
+                
+                if (screenId === 'planets-screen') {
+                    initializePlanetsScreen();
+                } else if (screenId === 'games-screen') {
+                    initializeGamesScreen();
+                } else if (screenId === 'quiz-screen') {
+                    initializeQuizScreen();
+                } else if (screenId === 'achievements-screen') {
+                    updateAchievementsScreen();
+                }
+            }
+        }
+
+        //  SISTEMA DE PLANETAS
+        const planetsData = {
+            mercury: {
+                name: "Mercurio",
+                color: "#8c8c8c",
+                diameter: "4,879 km",
+                temperature: "-173°C to 427°C",
+                fact: "¡Un año en Mercurio solo dura 88 días terrestres!",
+                description: "Planeta más cercano al Sol • Sin lunas",
+                explored: false
+            },
+            venus: {
+                name: "Venus",
+                color: "#e6c229",
+                diameter: "12,104 km",
+                temperature: "462°C",
+                fact: "¡Venus es el planeta más caliente del Sistema Solar!",
+                description: "Planeta más caliente • Sin lunas",
+                explored: false
+            },
+            earth: {
+                name: "Tierra",
+                color: "#2f54d6",
+                diameter: "12,742 km",
+                temperature: "-88°C to 58°C",
+                fact: "¡La Tierra es el único planeta conocido con vida!",
+                description: "Nuestro hogar • 1 luna",
+                explored: false
+            },
+            mars: {
+                name: "Marte",
+                color: "#c1440e",
+                diameter: "6,779 km",
+                temperature: "-87°C to -5°C",
+                fact: "¡Marte tiene el volcán más grande del Sistema Solar, Olympus Mons!",
+                description: "Planeta rojo • 2 lunas",
+                explored: false
+            },
+            jupiter: {
+                name: "Júpiter",
+                color: "#e0b36a",
+                diameter: "139,820 km",
+                temperature: "-108°C",
+                fact: "¡Júpiter es tan grande que todos los otros planetas cabrían dentro de él!",
+                description: "Planeta más grande • 79 lunas",
+                explored: false
+            }
+        };
+
+        let currentPlanet = 'mercury';
+        let exploredPlanets = 0;
+
+        function initializePlanetsScreen() {
+            // Actualizar contador de planetas 
+            updatePlanetsExplored();
+        }
+
+        function selectPlanet(planetId) {
+            // Remover clase active de todos los planetas
+            const planetItems = document.querySelectorAll('.planet-item');
+            planetItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Agregar clase active al planeta seleccionado
+            const selectedPlanet = document.querySelector(`.planet-item[onclick="selectPlanet('${planetId}')"]`);
+            if (selectedPlanet) {
+                selectedPlanet.classList.add('active');
+            }
+            
+            // Actualizar datos del planeta en el panel de información
+            const planetData = planetsData[planetId];
+            if (planetData) {
+                document.getElementById('planet-name').textContent = `🪐 ${planetData.name}`;
+                document.getElementById('planet-image').style.background = planetData.color;
+                document.getElementById('planet-diameter').innerHTML = `<strong>Diámetro:</strong> ${planetData.diameter}`;
+                document.getElementById('planet-temperature').innerHTML = `<strong>Temperatura:</strong> ${planetData.temperature}`;
+                document.getElementById('planet-fact').innerHTML = `<strong>Dato curioso:</strong> ${planetData.fact}`;
+                
+                currentPlanet = planetId;
+            }
+        }
+
+        function previousPlanet() {
+            const planetIds = Object.keys(planetsData);
+            const currentIndex = planetIds.indexOf(currentPlanet);
+            const previousIndex = (currentIndex - 1 + planetIds.length) % planetIds.length;
+            selectPlanet(planetIds[previousIndex]);
+        }
+
+        function nextPlanet() {
+            const planetIds = Object.keys(planetsData);
+            const currentIndex = planetIds.indexOf(currentPlanet);
+            const nextIndex = (currentIndex + 1) % planetIds.length;
+            selectPlanet(planetIds[nextIndex]);
+        }
+
+        function playNarration() {
+            alert(`Reproduciendo narración sobre ${planetsData[currentPlanet].name}`);
+            // Aquí se implementaría la lógica real para reproducir audio
+        }
+
+        function markAsExplored() {
+            if (!planetsData[currentPlanet].explored) {
+                planetsData[currentPlanet].explored = true;
+                exploredPlanets++;
+                updatePlanetsExplored();
+                alert(`¡${planetsData[currentPlanet].name} ha sido marcado como explorado!`);
+                
+                // Actualizar logros si es necesario
+                checkAchievements();
+            } else {
+                alert(`¡${planetsData[currentPlanet].name} ya estaba explorado!`);
+            }
+        }
+
+        function updatePlanetsExplored() {
+            document.getElementById('planets-explored').textContent = `${exploredPlanets}/${Object.keys(planetsData).length} planetas explorados`;
+        }
+
+        // ========== SISTEMA DE JUEGOS ==========
+        let gameDifficulty = 'normal';
+        let gameScore = 0;
+
+        function initializeGamesScreen() {
+            // Inicializar elementos del juego
+            setupDragAndDrop();
+        }
+
+        function setDifficulty(difficulty) {
+            gameDifficulty = difficulty;
+            // Actualizar estilos de botones de dificultad
+            const buttons = document.querySelectorAll('.difficulty-selector .btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('btn-primary');
+            });
+            event.target.classList.add('btn-primary');
+            
+            // Reiniciar juego con nueva dificultad
+            resetGame();
+        }
+
+        function setupDragAndDrop() {
+            const planets = document.querySelectorAll('#game-planets .planet-icon');
+            const container = document.getElementById('game-container');
+            
+            planets.forEach(planet => {
+                planet.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', planet.getAttribute('data-planet'));
+                });
+            });
+            
+            container.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+            
+            container.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const planetId = e.dataTransfer.getData('text/plain');
+                // Lógica para colocar planeta en órbita
+                updateGameProgress();
+            });
+        }
+
+        function checkAnswers() {
+            // Lógica para verificar respuestas
+            alert('Comprobando respuestas...');
+            gameScore += 10;
+            updateGameProgress();
+        }
+
+        function resetGame() {
+            // Reiniciar estado del juego
+            gameScore = 0;
+            updateGameProgress();
+            alert('Juego reiniciado');
+        }
+
+        function playAudioHelp() {
+            alert('Reproduciendo ayuda de audio');
+        }
+
+        function showOtherGames() {
+            alert('Mostrando otros juegos disponibles');
+        }
+
+        function updateGameProgress() {
+            // Actualizar progreso visual del juego
+            const progress = (gameScore / 100) * 100;
+            document.getElementById('game-progress-bar').style.width = `${progress}%`;
+            document.getElementById('game-progress-text').textContent = `⭐ ${gameScore}/100 puntos`;
+        }
+
+        //SISTEMA DE QUIZ
+        let currentQuestion = 1;
+        let quizScore = 0;
+        let totalQuestions = 10;
+
+        function initializeQuizScreen() {
+            // Inicializar estado del quiz
+            updateQuizProgress();
+        }
+
+        function selectAnswer(answer) {
+            // Lógica para procesar respuesta
+            if (answer === 'B') { // Respuesta correcta
+                quizScore++;
+                document.getElementById('quiz-feedback').textContent = '¡Correcto! Júpiter es el planeta más grande.';
+            } else {
+                document.getElementById('quiz-feedback').textContent = 'Incorrecto. Intenta de nuevo.';
+            }
+            
+            updateQuizProgress();
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                updateQuizProgress();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                updateQuizProgress();
+            } else {
+                // Quiz completado
+                alert(`¡Quiz completado! Puntuación: ${quizScore}/${totalQuestions}`);
+                showScreen('home-screen');
+            }
+        }
+
+        function pauseQuiz() {
+            alert('Quiz pausado');
+        }
+
+        function playQuestionAudio() {
+            alert('Reproduciendo pregunta en audio');
+        }
+
+        function showVisualHint() {
+            alert('Mostrando pista visual');
+        }
+
+        function updateQuizProgress() {
+            // Actualizar progreso visual del quiz
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progress}%`;
+            document.getElementById('quiz-progress').innerHTML = `Pregunta <strong>${currentQuestion}</strong> de <strong>${totalQuestions}</strong>`;
+            document.getElementById('quiz-score-current').textContent = `${quizScore}/${currentQuestion-1}`;
+            
+            // Actualizar puntuación en pantalla de inicio
+            document.getElementById('quiz-score').textContent = `Mejor puntuación: ${quizScore}/10`;
+        }
+
+        // SISTEMA DE LOGROS 
+        let achievements = {
+            'first-contact': false,
+            'rising-star': false,
+            'space-player': false,
+            'stellar-explorer': false
+        };
+
+        function updateAchievementsScreen() {
+            // Actualizar estadísticas
+            document.getElementById('stats-planets').textContent = `${exploredPlanets}/${Object.keys(planetsData).length}`;
+            document.getElementById('stats-quiz').textContent = `${Math.round((quizScore/totalQuestions)*100)}%`;
+            
+            // Actualizar logros desbloqueados
+            updateAchievementsList();
+        }
+
+        function checkAchievements() {
+            // Verificar si se han desbloqueado nuevos logros
+            if (exploredPlanets >= 1 && !achievements['first-contact']) {
+                unlockAchievement('first-contact');
+            }
+            
+            if (exploredPlanets >= Object.keys(planetsData).length && !achievements['stellar-explorer']) {
+                unlockAchievement('stellar-explorer');
+            }
+            
+            // Actualizar contador de logros desbloqueados
+            updateAchievementsCount();
+        }
+
+        function unlockAchievement(achievementId) {
+            achievements[achievementId] = true;
+            const badge = document.querySelector(`[data-achievement="${achievementId}"]`);
+            if (badge) {
+                badge.classList.remove('locked');
+                alert(`¡Logro desbloqueado: ${badge.querySelector('strong').textContent}!`);
+            }
+        }
+
+        function updateAchievementsList() {
+            // Actualizar visualización de logros
+            const achievementsList = document.getElementById('achievements-list');
+            // Lógica para mostrar logros desbloqueados/bloqueados
+        }
+
+        function updateAchievementsCount() {
+            const unlocked = Object.values(achievements).filter(a => a).length;
+            const total = Object.keys(achievements).length;
+            document.getElementById('achievements-unlocked').textContent = `${unlocked}/${total} logros desbloqueados`;
+        }
+
+        function shareAchievements() {
+            alert('Compartiendo logros en redes sociales');
+        }
+
+        // SISTEMA DE AUDIO 
+        document.getElementById('toggle-audio').addEventListener('click', function() {
+            const audioButton = document.getElementById('toggle-audio');
+            if (audioButton.textContent.includes('ON')) {
+                audioButton.textContent = '🔇 Sonido OFF';
+                // Lógica para desactivar audio
+            } else {
+                audioButton.textContent = '🔊 Sonido ON';
+                // Lógica para activar audio
+            }
+        });
+
+        // INICIALIZACIÓN 
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar la pantalla de inicio por defecto
+            showScreen('home-screen');
+            
+            // Inicializar contadores
+            updatePlanetsExplored();
+            updateAchievementsCount();
+        });
+    </script>
+</body>
+</html>
