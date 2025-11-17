@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Retículas Quiz y Ayuda - Aprende los Planetas</title>
+<style>
+:root{
+  --bg:#071433;
+  --card:#0b1630;
+  --accent:#FFD966;
+  --muted:#94a3b8;
+  --glass: rgba(255,255,255,0.03);
+}
+body{ margin:0; font-family:Inter,system-ui,Arial; background:var(--bg); color:#fff; }
+.wrap{ max-width:1100px; margin:32px auto; padding:20px; }
+h1{ margin:0 0 12px; color:var(--accent);}
+p.lead{ color:var(--muted); margin:6px 0 24px;}
+
+.card{ background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)); 
+  border-radius:12px; padding:16px; box-shadow:0 4px 18px rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.03); margin-bottom:22px; }
+
+/* QUIZ LAYOUT */
+.quiz-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:12px; }
+.quiz-title{ grid-column:1/span 6; text-align:center; background:var(--glass); padding:10px; border-radius:8px;}
+.quiz-question{ grid-column:1/span 6; background:var(--glass); padding:14px; border-radius:10px; text-align:center;}
+.quiz-answers{ grid-column:2/span 4; display:flex; flex-direction:column; gap:12px;}
+.quiz-btn{ background:var(--accent); color:#071433; padding:14px; border-radius:10px; text-align:center; font-weight:700;}
+.quiz-feedback{ grid-column:1/span 6; text-align:center; padding:12px; border-radius:10px; background:rgba(0,255,0,0.1); }
+
+/* HELP / AYUDA LAYOUT */
+.help-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:12px; }
+.help-title{ grid-column:1/span 6; text-align:center; background:var(--glass); padding:10px; border-radius:8px;}
+.help-section{ grid-column:1/span 6; background:var(--glass); padding:14px; border-radius:10px;}
+.help-item{ background:rgba(255,255,255,0.05); padding:12px; margin-bottom:10px; border-radius:8px;}
+
+.muted{ color:var(--muted); font-size:13px; }
+footer{ color:var(--muted); text-align:center; margin-top:30px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Retículas — Quiz y Ayuda</h1>
+  <p class="lead">Estructuras visuales para las pantallas del Quiz y la sección de Ayuda.</p>
+
+  <div class="card">
+    <h2>1. Retícula del Quiz</h2>
+    <div class="quiz-grid">
+      <div class="quiz-title">QUIZ — Pregunta 1/5</div>
+      <div class="quiz-question">¿Cuál es el planeta más cercano al Sol?</div>
+      <div class="quiz-answers">
+        <div class="quiz-btn">Mercurio</div>
+        <div class="quiz-btn">Venus</div>
+        <div class="quiz-btn">Tierra</div>
+      </div>
+      <div class="quiz-feedback">¡Correcto! 🌟</div>
+    </div>
+    <p class="muted">La pregunta ocupa 6 columnas; las respuestas se centran entre columnas 2 y 5.</p>
+  </div>
+
+  <div class="card">
+    <h2>2. Retícula de la sección Ayuda</h2>
+    <div class="help-grid">
+      <div class="help-title">Ayuda — ¿Cómo usar la aplicación?</div>
+      <div class="help-section">
+        <div class="help-item">• Para explorar los planetas, toca cualquiera de las tarjetas del menú.</div>
+        <div class="help-item">• En cada planeta verás su imagen, animación y descripción.</div>
+        <div class="help-item">• Para jugar el Quiz, selecciona una respuesta y recibe retroalimentación.</div>
+        <div class="help-item">• Puedes volver al menú principal tocando el botón ← Volver.</div>
+      </div>
+    </div>
+    <p class="muted">La sección de ayuda ocupa todo el ancho de las 6 columnas, ideal para lectura clara.</p>
+  </div>
+
+  <footer>Pantallas generadas en HTML — Aprende los Planetas</footer>
+</div>
+</body>
+</html>

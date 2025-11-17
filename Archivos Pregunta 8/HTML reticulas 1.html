@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Retículas - Aprende los Planetas</title>
+  <style>
+    :root{
+      --bg:#071433;
+      --card:#0b1630;
+      --accent:#FFD966;
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.03);
+    }
+    body{ margin:0; font-family: Inter, system-ui, Arial; background:var(--bg); color:#fff; -webkit-font-smoothing:antialiased; }
+    .wrap{ max-width:1100px; margin:32px auto; padding:20px; }
+    h1{ margin:0 0 12px; color:var(--accent); }
+    p.lead{ color:var(--muted); margin:6px 0 24px; }
+
+    /* Shared card style */
+    .card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:16px; box-shadow: 0 4px 18px rgba(0,0,0,0.6); margin-bottom:20px; border:1px solid rgba(255,255,255,0.03); }
+
+    /* 12-column overlay for Home */
+    .grid-12{ position:relative; height:180px; overflow:hidden; }
+    .grid-12::before{
+      content:"";
+      position:absolute; inset:0;
+      background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: calc(100% / 12) 100%;
+      pointer-events:none;
+    }
+    .home-layout{ position:relative; display:grid; grid-template-columns: repeat(12, 1fr); gap:12px; height:100%; align-items:center; }
+    .home-title{ grid-column: 3 / span 8; background:var(--glass); padding:10px; border-radius:8px; text-align:center; }
+    .home-button{ grid-column: 4 / span 6; justify-self:center; display:flex; gap:16px; }
+    .btn{ padding:14px 22px; border-radius:10px; font-weight:700; color:#071433; background:var(--accent); }
+
+    /* Planets Grid: desktop/tablet/mobile visuals */
+    .planets-sample{ display:grid; gap:12px; }
+    /* desktop: 4 columns */
+    @media (min-width: 1000px){
+      .planets-sample{ grid-template-columns: repeat(4, 1fr); }
+    }
+    /* tablet: 3 columns */
+    @media (min-width: 640px) and (max-width:999px){
+      .planets-sample{ grid-template-columns: repeat(3, 1fr); }
+    }
+    /* mobile: 2 columns */
+    @media (max-width:639px){
+      .planets-sample{ grid-template-columns: repeat(2, 1fr); }
+    }
+    .planet-tile{ background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px; border-radius:10px; text-align:center; min-height:90px; }
+
+    /* Detail page: 6-col visual */
+    .detail-grid{ display:grid; grid-template-columns: repeat(6, 1fr); gap:12px; align-items:start; }
+    .detail-back{ grid-column:1 / span 2; background:var(--glass); padding:10px; border-radius:8px; text-align:center; }
+    .detail-title{ grid-column:1 / span 6; text-align:center; margin-bottom:0; }
+    .detail-image{ grid-column:2 / span 4; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; height:220px; display:flex; align-items:center; justify-content:center; }
+    .detail-desc{ grid-column:1 / span 6; background:var(--glass); padding:14px; border-radius:8px; margin-top:8px; }
+
+    /* Tiny helper */
+    .muted{ color:var(--muted); font-size:13px; }
+    footer{ color:var(--muted); text-align:center; margin-top:30px; }
+    /* responsive preview label */
+    .label{ font-size:13px; color:var(--muted); margin-bottom:8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Retículas visuales — Aprende los Planetas</h1>
+    <p class="lead">Visualización de las retículas (grids) para Home, Planets y Detail. Ajusta tamaño de navegador para ver responsive.</p>
+
+    <div class="card">
+      <div class="label">1. Retícula Home — 12 columnas</div>
+      <div class="grid-12">
+        <div class="home-layout">
+          <div class="home-title">TÍTULO PRINCIPAL (col 3–10)</div>
+          <div class="home-button">
+            <div class="btn">Explorar</div>
+            <div class="btn">Quiz</div>
+          </div>
+        </div>
+      </div>
+      <p class="muted">Interpretación: el título ocupa las columnas 3 a 10; los botones están centrados ocupando columnas 4 a 9.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">2. Retícula Planets — responsive (Desktop 4, Tablet 3, Mobile 2)</div>
+      <div class="planets-sample">
+        <div class="planet-tile">Mercurio</div>
+        <div class="planet-tile">Venus</div>
+        <div class="planet-tile">Tierra</div>
+        <div class="planet-tile">Marte</div>
+        <div class="planet-tile">Júpiter</div>
+        <div class="planet-tile">Saturno</div>
+        <div class="planet-tile">Urano</div>
+        <div class="planet-tile">Neptuno</div>
+      </div>
+      <p class="muted">Redimensiona la ventana para ver cómo cambia el número de columnas.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">3. Retícula Detail — 6 columnas</div>
+      <div class="detail-grid">
+        <div class="detail-back">← Volver (col 1–2)</div>
+        <h2 class="detail-title">NOMBRE DEL PLANETA</h2>
+        <div class="detail-image">IMAGEN (col 2–5)</div>
+        <div class="detail-desc">Descripción breve y datos curiosos. Caja ocupando 6 columnas.</div>
+      </div>
+      <p class="muted">Estructura pensada para centrar imagen y texto, fácil de leer en cualquier dispositivo.</p>
+    </div>
+
+    <footer>Archivo de retículas generado — vista previa HTML</footer>
+  </div>
+</body>
+</html>
