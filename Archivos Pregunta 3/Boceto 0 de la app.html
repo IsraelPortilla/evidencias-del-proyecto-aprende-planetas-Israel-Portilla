@@ -362,7 +362,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Pantalla Principal -->
+        
         <section id="home-screen" class="grid home-grid">
             <div class="grid-item header">
                 <h1>🚀 Aventura Espacial ⭐</h1>
@@ -444,7 +444,7 @@
             </div>
         </section>
 
-        <!-- Pantalla de Planetas -->
+        
         <section id="planets-screen" class="grid planets-grid" style="display: none;">
             <div class="grid-item header">
                 <h1>🌌 Explora los Planetas</h1>
@@ -524,22 +524,22 @@
     </div>
 
     <script>
-        // Función para cambiar entre pantallas
+        
         function showScreen(screenId) {
-            // Ocultar todas las pantallas
+            
             const screens = document.querySelectorAll('section');
             screens.forEach(screen => {
                 screen.style.display = 'none';
             });
             
-            // Mostrar la pantalla seleccionada
+            
             const selectedScreen = document.getElementById(screenId);
             if (selectedScreen) {
                 selectedScreen.style.display = 'grid';
             }
         }
 
-        // Datos de los planetas
+        
         const planetsData = {
             mercury: {
                 name: "Mercurio",
@@ -585,21 +585,21 @@
 
         let currentPlanet = 'mercury';
 
-        // Función para seleccionar un planeta
+        
         function selectPlanet(planetId) {
-            // Remover clase active de todos los planetas
+            
             const planetItems = document.querySelectorAll('.planet-item');
             planetItems.forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Agregar clase active al planeta seleccionado
+            
             const selectedPlanet = document.querySelector(`.planet-item[onclick="selectPlanet('${planetId}')"]`);
             if (selectedPlanet) {
                 selectedPlanet.classList.add('active');
             }
             
-            // Actualizar datos del planeta en el panel de información
+            
             const planetData = planetsData[planetId];
             if (planetData) {
                 document.getElementById('planet-name').textContent = `🪐 ${planetData.name}`;
@@ -612,7 +612,7 @@
             }
         }
 
-        // Función para navegar al planeta anterior
+        
         function previousPlanet() {
             const planetIds = Object.keys(planetsData);
             const currentIndex = planetIds.indexOf(currentPlanet);
@@ -620,7 +620,7 @@
             selectPlanet(planetIds[previousIndex]);
         }
 
-        // Función para navegar al siguiente planeta
+        
         function nextPlanet() {
             const planetIds = Object.keys(planetsData);
             const currentIndex = planetIds.indexOf(currentPlanet);
@@ -628,19 +628,19 @@
             selectPlanet(planetIds[nextIndex]);
         }
 
-        // Función para reproducir narración
+       
         function playNarration() {
             alert(`Reproduciendo narración sobre ${planetsData[currentPlanet].name}`);
-            // Aquí se implementaría la lógica real para reproducir audio
+            
         }
 
-        // Función para marcar planeta como explorado
+        
         function markAsExplored() {
             alert(`¡${planetsData[currentPlanet].name} ha sido marcado como explorado!`);
-            // Aquí se implementaría la lógica real para guardar el progreso
+           
         }
 
-        // Control de audio
+        
         document.getElementById('toggle-audio').addEventListener('click', function() {
             const audioButton = document.getElementById('toggle-audio');
             if (audioButton.textContent.includes('ON')) {
@@ -650,9 +650,9 @@
             }
         });
 
-        // Inicializar la aplicación
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Mostrar la pantalla de inicio por defecto
+            
             showScreen('home-screen');
         });
     </script>
